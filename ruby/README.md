@@ -5,3 +5,12 @@ You connect to Materialize the same way you [connect to PostgreSQL with `pg`](ht
 ```
 gem install pg
 ```
+
+### Examples:
+
+- [Connection](./connection.ru)
+- [Stream](./tail.ru)
+- [Query](./query.ru)
+- [Insert data into tables](./insert.ru)
+- [Manage sources](./source.ru)
+- [Manage Views](./view.ru)
