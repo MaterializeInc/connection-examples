@@ -12,8 +12,17 @@ go get github.com/jackc/pgx/v4
 Run the example:
 
 ```
-go run example.go
+go run connection.go
 
 # Output:
 # Connected to Materialize!
 ```
+
+### Examples:
+
+- [Connection](./connection.go)
+- [Stream](./tail.go)
+- [Query](./query.go)
+- [Insert data into tables](./insert.go)
+- [Manage sources](./source.go)
+- [Manage Views](./view.go)
