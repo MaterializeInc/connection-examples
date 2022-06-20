@@ -7,3 +7,12 @@ Install the dependencies:
 ```
 npm install pg
 ```
+
+### Examples:
+
+- [Connection](./connection.js)
+- [Stream](./tail.js)
+- [Query](./query.js)
+- [Insert data into tables](./insert.js)
+- [Manage sources](./source.js)
+- [Manage Views](./view.js)
