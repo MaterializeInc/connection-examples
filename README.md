@@ -20,6 +20,7 @@ Materialize is PostgreSQL-compatible, which means that you connect to Materializ
 * [`CREATE SOURCE`](https://materialize.com/docs/sql/create-source/)
 * [`CREATE VIEWS`](https://materialize.com/docs/sql/create-views)
 * [`SELECT`](https://materialize.com/docs/sql/select)
+* [Materialize Demos](https://github.com/MaterializeInc/demos)
 
 ## Community
 
