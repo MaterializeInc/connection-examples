@@ -1,6 +1,10 @@
-# Materialize
+# Materialize connection examples
 
-Materialize is PostgreSQL-compatible, which means that you connect to Materialize the same way you connect to a PostgreSQL instance using your favorite client.
+[![Slack Badge](https://img.shields.io/badge/Join%20us%20on%20Slack!-blueviolet?style=flat&logo=slack&link=https://materialize.com/s/chat)](https://materialize.com/s/chat)
+
+[Materialize](https://github.com/MaterializeInc/materialize) is a streaming database for real-time applications. It is wire-compatible with PostgreSQL, which means that you can connect to a Materialize instance using your favorite client libraries, ORM frameworks and other third-party tools that support PostgreSQL.
+
+This repo is a collection of reference examples for common language-specific PostgreSQL drivers and PostgreSQL-compatible ORMs that have been tested with Materialize.
 
 ## Client libraries and Frameworks
 
@@ -22,6 +26,6 @@ Materialize is PostgreSQL-compatible, which means that you connect to Materializ
 * [`SELECT`](https://materialize.com/docs/sql/select)
 * [Materialize Demos](https://github.com/MaterializeInc/demos)
 
-## Community
+## Getting support
 
-If you have any questions or comments, please join the [Materialize Slack Community](https://materialize.com/s/chat)!
+If you run into a snag or need support as you explore the examples in this repo, join the [Materialize Slack community](https://materialize.com/s/chat) or [open an issue](https://github.com/MaterializeInc/connection-examples/issues)!
