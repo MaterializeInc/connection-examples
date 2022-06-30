@@ -15,6 +15,7 @@ This repo is a collection of reference examples for common language-specific Pos
 - [Deno](./deno)
 - [Java](./java)
 - [Python](./python)
+  - [FastAPI](./fastapi)
 - [Ruby](./ruby)
 - [Go](./go)
 
