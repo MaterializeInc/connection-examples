@@ -8,9 +8,9 @@ gem install pg
 
 ### Examples:
 
-- [Connection](./connection.ru)
-- [Stream](./tail.ru)
-- [Query](./query.ru)
-- [Insert data into tables](./insert.ru)
-- [Manage sources](./source.ru)
-- [Manage Views](./view.ru)
+- [Connection](./connection.rb)
+- [Stream](./tail.rb)
+- [Query](./query.rb)
+- [Insert data into tables](./insert.rb)
+- [Manage sources](./source.rb)
+- [Manage Views](./view.rb)
