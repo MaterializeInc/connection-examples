@@ -1,7 +1,7 @@
 # Materialize + Lua Example
 
 This example uses [luasql](https://keplerproject.github.io/luasql/index.html)
-and was tested on Lua [5 4](5.4)
+and was tested on Lua `v5.4`
 
 Install the postgres driver using luarocks:
 
