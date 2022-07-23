@@ -3,7 +3,7 @@
 This example uses [luasql](https://keplerproject.github.io/luasql/index.html)
 and was tested on Lua `v5.4`
 
-Install the postgres driver using luarocks:
+Install the Postgres driver using LuaRocks:
 
 `luarocks install luasql-postgres`
 
