@@ -4,7 +4,7 @@ local env = assert (driver.postgres())
 local con = assert(env:connect("postgresql://materialize@localhost:6875/materialize?sslmode=disable"))
 
 assert (con:execute([[
-create table if not exists countries (name text, code text);
+CREATE TABLE IF NOT EXISTS countries (name TEXT, code TEXT);
 ]]))
 
 local list = {
