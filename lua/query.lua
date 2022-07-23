@@ -9,7 +9,7 @@ local function rows (connection, sql_statement)
   end
 end
 
-for symbol, avg in rows(con, "select * from avg_bid") do
+for symbol, avg in rows(con, "SELECT * FROM avg_bid") do
     print(string.format("%s:%s", symbol, avg))
 end
 
