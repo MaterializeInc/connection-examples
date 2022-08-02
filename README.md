@@ -19,6 +19,7 @@ This repo is a collection of reference examples for common language-specific Pos
   - [FastAPI](./fastapi)
 - [Ruby](./ruby)
 - [Go](./go)
+- [Lua](./lua)
 
 ## Helpful resources:
 
