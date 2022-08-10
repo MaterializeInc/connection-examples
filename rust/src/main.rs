@@ -2,14 +2,14 @@ use insert::insert;
 use query::run_query;
 use source::create_source;
 use table::create_table;
-use crate::views::create_materialized_view;
+use crate::view::create_materialized_view;
 use tail::tail;
 
 mod insert;
 mod query;
 mod source;
 mod tail;
-mod views;
+mod view;
 mod connection;
 mod table;
 

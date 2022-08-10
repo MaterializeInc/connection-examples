@@ -1,6 +1,6 @@
 # Materialize + Rust Example
 
-You can connect to Materialize the same way you connect to [PostgreSQL with crate](https://crates.io/crates/postgres).
+You can connect to Materialize the same way you connect to [PostgreSQL with the crate](https://crates.io/crates/postgres).
 
 Add the dependencies:
 
@@ -20,5 +20,5 @@ cargo run
 - [Stream](./src/tail.rs)
 - [Query](./src/query.rs)
 - [Insert data into tables](./src/insert.rs)
-- [Manage sources](./src/source.js)
-- [Manage Views](./src/view.js)
+- [Manage sources](./src/source.rs)
+- [Manage Views](./src/view.rs)

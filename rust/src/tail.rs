@@ -5,7 +5,7 @@ use crate::connection::create_client;
 /// Run a tail over the PUBNUB materialized view
 pub(crate) fn tail() {
     let mut client = create_client().expect("Error creating client.");
-    let mut transaction = client.transaction().expect("Error creating transactiong");
+    let mut transaction = client.transaction().expect("Error creating transaction.");
     transaction.execute("DECLARE c CURSOR FOR TAIL (SELECT symbol, bid_price::text FROM market_orders) WITH (SNAPSHOT = false);", &[]).expect("Error creating cursor.");
 
     loop {
