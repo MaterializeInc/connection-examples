@@ -20,6 +20,7 @@ This repo is a collection of reference examples for common language-specific Pos
 - [Ruby](./ruby)
 - [Go](./go)
 - [Lua](./lua)
+- [Rust](./rust)
 
 ## Helpful resources:
 
