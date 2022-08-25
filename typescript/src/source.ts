@@ -2,15 +2,19 @@
 import pkg from 'pg';
 const { Client } = pkg;
 
-const client = new Client('postgres://materialize@localhost:6875/materialize');
+const client = new Client({
+    user: "MATERIALIZE_USERNAME",
+    database: "materialize",
+    password: "APP_SPECIFIC_PASSWORD",
+    hostname: "MATERIALIZE_HOST",
+    port: 6875
+});
 
 async function main() {
     try {
         await client.connect();
         const res = await client.query(
-            `CREATE SOURCE market_orders_raw FROM PUBNUB
-                SUBSCRIBE KEY 'sub-c-4377ab04-f100-11e3-bffd-02ee2ddab7fe'
-                CHANNEL 'pubnub-market-orders'`
+            `CREATE SOURCE counter FROM LOAD GENERATOR COUNTER`
             );
         console.log(res);
     } catch(e) {

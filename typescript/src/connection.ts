@@ -2,11 +2,22 @@
 import pkg from 'pg';
 const { Client } = pkg;
 
-// or annoyingly, 
+// or annoyingly,
 // import pg from 'pg'
 // new pg.Client(...)
 
-const client = new Client('postgres://materialize@localhost:6875/materialize');
+const client = new Client({
+    user: "MATERIALIZE_USERNAME",
+    database: "materialize",
+    password: "APP_SPECIFIC_PASSWORD",
+    hostname: "MATERIALIZE_HOST",
+    port: 6875
+});
+
+/*
+    Alternatively, you can use the connection string format:
+    const client = new Client('postgres://materialize@localhost:6875/materialize');
+*/
 
 async function main() {
     try {
