@@ -1,31 +1,30 @@
 package main
 
 import (
-    "context"
-    "github.com/jackc/pgx/v4"
-    "fmt"
+	"context"
+	"fmt"
+
+	"github.com/jackc/pgx/v4"
 )
 
 func main() {
 
-    ctx := context.Background()
-    connStr := "postgres://materialize@localhost:6875/materialize?sslmode=disable"
+	ctx := context.Background()
+	connStr := "postgres://MATERIALIZE_USERNAME:APP_SPECIFIC_PASSWORD@MATERIALIZE_HOST:6875/materialize"
 
-    conn, err := pgx.Connect(ctx, connStr)
-    if err != nil {
-        fmt.Println(err)
-    } else {
-        fmt.Println("Connected to Materialize!")
-    }
+	conn, err := pgx.Connect(ctx, connStr)
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println("Connected to Materialize!")
+	}
 
-    createSourceSQL := `CREATE SOURCE market_orders_raw FROM PUBNUB
-                SUBSCRIBE KEY 'sub-c-4377ab04-f100-11e3-bffd-02ee2ddab7fe
-                CHANNEL 'pubnub-market-orders'`
+	createSourceSQL := `CREATE SOURCE counter FROM LOAD GENERATOR COUNTER`
 
-    _, err = conn.Exec(ctx, createSourceSQL)
-    if err != nil {
-        fmt.Println(err)
-    }
+	_, err = conn.Exec(ctx, createSourceSQL)
+	if err != nil {
+		fmt.Println(err)
+	}
 
-    defer conn.Close(context.Background())
+	defer conn.Close(context.Background())
 }
