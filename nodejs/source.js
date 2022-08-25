@@ -1,12 +1,18 @@
 const { Client } = require('pg');
-const client = new Client('postgres://materialize@localhost:6875/materialize');
+
+const client = new Client({
+    user: MATERIALIZE_USERNAME,
+    password: MATERIALIZE_PASSWORD,
+    host: MATERIALIZE_HOST,
+    port: 6875,
+    database: 'materialize',
+    ssl: true
+});
 
 async function main() {
     await client.connect();
     const res = await client.query(
-        `CREATE SOURCE market_orders_raw_2 FROM PUBNUB
-            SUBSCRIBE KEY 'sub-c-4377ab04-f100-11e3-bffd-02ee2ddab7fe'
-            CHANNEL 'pubnub-market-orders'`
+        `CREATE SOURCE counter FROM LOAD GENERATOR COUNTER`
         );
     console.log(res);
 }
