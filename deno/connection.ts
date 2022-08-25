@@ -1,7 +1,7 @@
 import { Client } from "https://deno.land/x/postgres/mod.ts";
 
 const client = new Client({
-    user: "MATERIALIZE_USER",
+    user: "MATERIALIZE_USERNAME",
     database: "materialize",
     password: "APP_SPECIFIC_PASSWORD",
     hostname: "MATERIALIZE_HOST",
@@ -10,7 +10,7 @@ const client = new Client({
 
 /*
     Alternatively, you can use the following syntax to connect to Materialize:
-    const client = new Client('postgres://MATERIALIZE_USER@MATERIALIZE_HOST:6875/materialize')
+    const client = new Client('postgres://MATERIALIZE_USERNAME@MATERIALIZE_HOST:6875/materialize')
 */
 
 const main = async ({ response }: { response: any }) => {

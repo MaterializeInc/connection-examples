@@ -8,9 +8,9 @@ import java.sql.PreparedStatement;
 
 public class App {
 
-    private final String url = "jdbc:postgresql://localhost:6875/materialize";
-    private final String user = "materialize";
-    private final String password = "materialize";
+    private final String url = "jdbc:postgresql://MATERIALIZE_HOST:6875/materialize";
+    private final String user = "MATERIALIZE_USERNAME";
+    private final String password = "MATERIALIZE_PASSWORD";
 
     /**
      * Connect to Materialize
@@ -21,7 +21,7 @@ public class App {
         Properties props = new Properties();
         props.setProperty("user", user);
         props.setProperty("password", password);
-        props.setProperty("ssl","false");
+        props.setProperty("ssl","true");
 
         return DriverManager.getConnection(url, props);
 

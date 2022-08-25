@@ -1,7 +1,7 @@
 import { Client } from "https://deno.land/x/postgres/mod.ts";
 
 const client = new Client({
-    user: "MATERIALIZE_USER",
+    user: "MATERIALIZE_USERNAME",
     database: "materialize",
     password: "APP_SPECIFIC_PASSWORD",
     hostname: "MATERIALIZE_HOST",
