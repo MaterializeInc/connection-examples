@@ -1,6 +1,12 @@
 import { Client } from "https://deno.land/x/postgres/mod.ts";
 
-const client = new Client('postgres://materialize@127.0.0.1:6875/materialize')
+const client = new Client({
+    user: "MATERIALIZE_USER",
+    database: "materialize",
+    password: "APP_SPECIFIC_PASSWORD",
+    hostname: "MATERIALIZE_HOST",
+    port: 6875
+})
 
 const main = async ({ response }: { response: any }) => {
     try {
