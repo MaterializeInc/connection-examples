@@ -17,6 +17,6 @@ function connect(string $host, int $port, string $db, string $user, string $pass
     }
 }
 
-$connection = connect('localhost', 6875, 'materialize', 'materialize', 'materialize');
+$connection = connect('MATERIALIZE_HOST', 6875, 'materialize', 'MATERIALIZE_USERNAME', 'MATERIALIZE_PASSWORD');
 
 echo 'Connected to Materialize!';
