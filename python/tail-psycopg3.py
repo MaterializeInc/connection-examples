@@ -3,7 +3,7 @@
 import psycopg3
 import sys
 
-dsn = "postgresql://materialize@localhost:6875/materialize?sslmode=disable"
+dsn = "postgresql://MATERIALIZE_USERNAME:MATERIALIZE_PASSWORD@MATERIALIZE_HOST:6875/materialize?sslmode=enabled"
 conn = psycopg3.connect(dsn)
 
 conn = psycopg3.connect(dsn)
