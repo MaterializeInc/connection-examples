@@ -1,7 +1,7 @@
 require 'pg'
 
 # Locally running instance:
-conn = PG.connect(host:"127.0.0.1", port: 6875, user: "materialize")
+conn = PG.connect(host:"MATERIALIZE_HOST", port: 6875, user: "MATERIALIZE_USERNAME", password: "MATERIALIZE_PASSWORD")
 conn.exec('BEGIN')
 conn.exec('DECLARE c CURSOR FOR TAIL my_view')
 

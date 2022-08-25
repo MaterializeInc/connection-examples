@@ -1,12 +1,12 @@
 require 'pg'
 
-conn = PG.connect(host:"127.0.0.1", port: 6875, user: "materialize")
+conn = PG.connect(host:"MATERIALIZE_HOST", port: 6875, user: "MATERIALIZE_USERNAME", password: "MATERIALIZE_PASSWORD")
 
 # Create a source
 src = conn.exec(
-    "CREATE SOURCE IF NOT EXISTS market_orders_raw FROM PUBNUB
-            SUBSCRIBE KEY 'sub-c-4377ab04-f100-11e3-bffd-02ee2ddab7fe'
-            CHANNEL 'pubnub-market-orders'"
+    "CREATE SOURCE counter
+      FROM LOAD GENERATOR COUNTER
+    "
 );
 
 puts src.inspect

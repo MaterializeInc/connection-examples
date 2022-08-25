@@ -1,3 +1,3 @@
 require 'pg'
 
-conn = PG.connect(host:"127.0.0.1", port: 6875, user: "materialize")
+conn = PG.connect(host:"MATERIALIZE_HOST", port: 6875, user: "MATERIALIZE_USERNAME", password: "MATERIALIZE_PASSWORD")
