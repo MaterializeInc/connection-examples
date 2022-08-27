@@ -1,7 +1,7 @@
 local utils = require("utils")
 local driver = require "luasql.postgres"
 local env = assert (driver.postgres())
-local con = assert(env:connect("postgresql://materialize@localhost:6875/materialize?sslmode=disable"))
+local con = assert(env:connect("postgresql://MATERIALIZE_USERNAME:MATERIALIZE_PASSWORD@MATERIALIZE_HOST:6875/materialize?sslmode=enabled"))
 
 assert (con:execute([[
 CREATE TABLE IF NOT EXISTS countries (name TEXT, code TEXT);

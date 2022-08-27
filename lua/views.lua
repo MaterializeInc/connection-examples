@@ -1,7 +1,7 @@
 local dump = require('utils').dump
 local driver = require "luasql.postgres"
 local env = assert (driver.postgres())
-local con = assert(env:connect("postgresql://materialize@localhost:6875/materialize?sslmode=disable"))
+local con = assert(env:connect("postgresql://MATERIALIZE_USERNAME:MATERIALIZE_PASSWORD@MATERIALIZE_HOST:6875/materialize?sslmode=enabled"))
 
 con:execute[[
 CREATE VIEW market_orders_2 AS
