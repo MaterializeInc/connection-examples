@@ -13,7 +13,7 @@ Run examples
 $ node "./dist/connection.js"
 $ node "./dist/source.js"
 $ node "./dist/view.js"
-$ node "./dist/tail.js"
+$ node "./dist/subscribe.js"
 $ node "./dist/query.js"
 $ node "./dist/insert.js"
 ```
@@ -21,7 +21,7 @@ $ node "./dist/insert.js"
 ### Examples:
 
 - [Connection](./src/connection.ts)
-- [Stream](./src/tail.ts)
+- [Stream](./src/subscribe.ts)
 - [Query](./src/query.ts)
 - [Insert data into tables](./insert.ts)
 - [Manage sources](./source.ts)

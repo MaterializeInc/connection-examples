@@ -15,7 +15,7 @@ async function main() {
     await client.connect();
 
     await client.query('BEGIN');
-    await client.query('DECLARE c CURSOR FOR TAIL market_orders_2');
+    await client.query('DECLARE c CURSOR FOR SUBSCRIBE market_orders_2');
 
     while (true) {
       const res = await client.query('FETCH ALL c');

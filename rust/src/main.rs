@@ -3,12 +3,12 @@ use query::run_query;
 use source::create_source;
 use table::create_table;
 use crate::view::create_materialized_view;
-use tail::tail;
+use subscribe::subscribe;
 
 mod insert;
 mod query;
 mod source;
-mod tail;
+mod subscribe;
 mod view;
 mod connection;
 mod table;
@@ -27,6 +27,6 @@ fn main() {
     println!("Running query: ");
     run_query();
 
-    println!("Running tail: ");
-    tail();
+    println!("Running subscribe: ");
+    subscribe();
 }

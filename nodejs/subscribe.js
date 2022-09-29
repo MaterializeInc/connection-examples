@@ -12,7 +12,7 @@ async function main() {
   await client.connect();
 
   await client.query("BEGIN");
-  await client.query("DECLARE c CURSOR FOR TAIL my_view");
+  await client.query("DECLARE c CURSOR FOR SUBSCRIBE my_view");
 
   while (true) {
     const res = await client.query("FETCH ALL c");

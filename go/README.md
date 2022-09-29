@@ -21,7 +21,7 @@ go run connection.go
 ### Examples:
 
 - [Connection](./connection.go)
-- [Stream](./tail.go)
+- [Stream](./subscribe.go)
 - [Query](./query.go)
 - [Insert data into tables](./insert.go)
 - [Manage sources](./source.go)

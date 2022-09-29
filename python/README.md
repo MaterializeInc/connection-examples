@@ -11,7 +11,7 @@ pip install psycopg2
 ### Examples:
 
 - [Connection](./connection.py)
-- [Stream](./tail.py)
+- [Stream](./subscribe.py)
 - [Query](./query.py)
 - [Insert data into tables](./insert.py)
 - [Manage sources](./source.py)

@@ -27,7 +27,7 @@ This repo is a collection of reference examples for common language-specific Pos
 * [`CREATE SOURCE`](https://materialize.com/docs/sql/create-source/) - syntax for creating new connections to upstream data sources.
 * [`CREATE MATERIALIZED VIEW`](https://materialize.com/docs/sql/create-materialized-view/) - syntax for creating an incrementally updating materialized view.
 * [`SELECT`](https://materialize.com/docs/sql/select) - syntax for querying materialized views.
-* [`TAIL`](https://materialize.com/docs/sql/tail/) - syntax for subscribing to changes in a materialized view or query via a long-lived PostgreSQL transaction.
+* [`SUBSCRIBE`](https://materialize.com/docs/sql/subscribe/) - syntax for subscribing to changes in a materialized view or query via a long-lived PostgreSQL transaction.
 * [Materialize Demos](https://github.com/MaterializeInc/demos)
 
 ## Getting support

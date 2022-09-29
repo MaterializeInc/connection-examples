@@ -26,14 +26,14 @@ func main() {
 	}
 	defer tx.Rollback(ctx)
 
-	_, err = tx.Exec(ctx, "DECLARE c CURSOR FOR TAIL my_view")
+	_, err = tx.Exec(ctx, "DECLARE c CURSOR FOR SUBSCRIBE my_view")
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
 	// Define a struct to hold the data returned from the query
-	type tailResult struct {
+	type subscribeResult struct {
 		MzTimestamp int64
 		MzDiff      int
 		MzValue     int
@@ -48,14 +48,14 @@ func main() {
 		}
 
 		for rows.Next() {
-			var r tailResult
+			var r subscribeResult
 			if err := rows.Scan(&r.MzTimestamp, &r.MzDiff, &r.MzValue); err != nil {
 				fmt.Println(err)
 				tx.Rollback(ctx)
 				return
 			}
 			fmt.Printf("%d %d %d\n", r.MzTimestamp, r.MzDiff, r.MzValue)
-			// operate on tailResult
+			// operate on subscribeResult
 		}
 	}
 

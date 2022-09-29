@@ -11,7 +11,7 @@ npm install pg
 ### Examples:
 
 - [Connection](./connection.js)
-- [Stream](./tail.js)
+- [Stream](./subscribe.js)
 - [Query](./query.js)
 - [Insert data into tables](./insert.js)
 - [Manage sources](./source.js)

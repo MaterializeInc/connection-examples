@@ -5,7 +5,7 @@ You connect to Materialize the same way you connect to [PostgreSQL with the JDBC
 ### Examples:
 
 - [Connection](./connection.java)
-- [Stream](./tail.java)
+- [Stream](./subscribe.java)
 - [Query](./query.java)
 - [Insert data into tables](./insert.java)
 - [Manage sources](./source.java)

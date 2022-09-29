@@ -11,7 +11,7 @@ deno run --allow-net --allow-env connection.ts
 ### Examples:
 
 - [Connection](./connection.ts)
-- [Stream](./tail.ts)
+- [Stream](./subscribe.ts)
 - [Query](./query.ts)
 - [Insert data into tables](./insert.ts)
 - [Manage sources](./source.ts)

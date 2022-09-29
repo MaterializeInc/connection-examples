@@ -13,7 +13,7 @@ and dumpings a table to stdout.
 ### Examples:
 
 - [Connection](./connection.lua)
-- [Stream](./tail.lua)
+- [Stream](./subscribe.lua)
 - [Query](./query.lua)
 - [Insert data into tables](./insert.lua)
 - [Manage sources](./source.lua)

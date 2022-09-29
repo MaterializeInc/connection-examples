@@ -13,7 +13,7 @@ const main = async ({ response }: { response: any }) => {
         await client.connect()
 
         await client.queryObject('BEGIN');
-        await client.queryObject('DECLARE c CURSOR FOR TAIL countries');
+        await client.queryObject('DECLARE c CURSOR FOR SUBSCRIBE countries');
 
         while (true) {
             const res = await client.queryObject('FETCH ALL c');

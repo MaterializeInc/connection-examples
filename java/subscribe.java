@@ -26,12 +26,12 @@ public class App {
 
     }
 
-    public void tail() {
+    public void subscribe() {
         try (Connection conn = connect()) {
 
             Statement stmt = conn.createStatement();
             stmt.execute("BEGIN");
-            stmt.execute("DECLARE c CURSOR FOR TAIL my_view");
+            stmt.execute("DECLARE c CURSOR FOR SUBSCRIBE my_view");
             while (true) {
                 ResultSet rs = stmt.executeQuery("FETCH ALL c");
                 if(rs.next()) {
@@ -45,6 +45,6 @@ public class App {
 
     public static void main(String[] args) {
         App app = new App();
-        app.tail();
+        app.subscribe();
     }
 }

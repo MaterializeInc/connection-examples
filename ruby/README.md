@@ -9,7 +9,7 @@ gem install pg
 ### Examples:
 
 - [Connection](./connection.rb)
-- [Stream](./tail.rb)
+- [Stream](./subscribe.rb)
 - [Query](./query.rb)
 - [Insert data into tables](./insert.rb)
 - [Manage sources](./source.rb)

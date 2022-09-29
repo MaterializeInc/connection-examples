@@ -17,7 +17,7 @@ cargo run
 ### Examples:
 
 - [Connection](./src/connection.rs)
-- [Stream](./src/tail.rs)
+- [Stream](./src/subscribe.rs)
 - [Query](./src/query.rs)
 - [Insert data into tables](./src/insert.rs)
 - [Manage sources](./src/source.rs)

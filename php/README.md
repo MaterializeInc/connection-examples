@@ -5,7 +5,7 @@ You connect to Materialize the same way you [connect to PostgreSQL with `PDO_PGS
 ### Examples:
 
 - [Connection](./connection.php)
-- [Stream](./tail.php)
+- [Stream](./subscribe.php)
 - [Query](./query.php)
 - [Insert data into tables](./insert.php)
 - [Manage sources](./source.php)
