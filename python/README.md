@@ -16,3 +16,15 @@ pip install psycopg2
 - [Insert data into tables](./insert.py)
 - [Manage sources](./source.py)
 - [Manage Views](./view.py)
+
+### `pg8000` Example
+
+Alternatively, you can use [`pg8000`](https://pypi.org/project/pg8000/) to connect to Materialize.
+
+To install [`pg8000`](https://pypi.org/project/pg8000/) run:
+
+```
+pip install pg8000
+```
+
+- [pg8000 example](./pg8000-example.py)
