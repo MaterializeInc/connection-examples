@@ -27,4 +27,4 @@ To install [`pg8000`](https://pypi.org/project/pg8000/) run:
 pip install pg8000
 ```
 
-- [pg8000 example](./pg8000-example.py)
+- [pg8000](./pg8000)
