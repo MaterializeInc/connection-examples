@@ -7,8 +7,6 @@ dsn = "user=MATERIALIZE_USERNAME password=MATERIALIZE_PASSWORD host=MATERIALIZE_
 conn = psycopg2.connect(dsn)
 conn.autocommit = True
 
-cur = conn.cursor()
-
 with conn.cursor() as cur:
     cur.execute("CREATE SOURCE counter FROM LOAD GENERATOR COUNTER")
 
