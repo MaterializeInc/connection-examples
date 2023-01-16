@@ -45,6 +45,6 @@ git push origin my-branch
 
 That's it — you're ready to submit a pull request!
 
-## Issues
+## Getting support
 
 If you have questions, please [create a GitHub issue](https://github.com/MaterializeInc/connection-examples/issues/new).
