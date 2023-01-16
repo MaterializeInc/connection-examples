@@ -47,4 +47,4 @@ That's it — you're ready to submit a pull request!
 
 ## Getting support
 
-If you have questions, please [create a GitHub issue](https://github.com/MaterializeInc/connection-examples/issues/new).
+If you run into a snag or need support as you prepare your contribution, join the Materialize [Slack community](https://materialize.com/s/chat) or [open an issue](https://github.com/MaterializeInc/connection-examples/issues/new)!
