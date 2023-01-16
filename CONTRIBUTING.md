@@ -11,7 +11,7 @@ agree to abide by the [code of conduct](CODE_OF_CONDUCT.md).
 Fork, then clone the repo:
 
 ```
-git clone https://github.com/MaterializeInc/connection-examples.git
+git clone https://github.com/<username>/connection-examples.git
 ```
 
 Create a branch for your edits:
