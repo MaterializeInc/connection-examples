@@ -5,8 +5,7 @@ Contributions of many kinds are encouraged and most welcome.
 
 ## Pull requests
 
-We welcome pull requests from everyone. By participating in this project, you
-agree to abide by the [code of conduct](CODE_OF_CONDUCT.md).
+We welcome pull requests from everyone.
 
 Fork, then clone the repo:
 

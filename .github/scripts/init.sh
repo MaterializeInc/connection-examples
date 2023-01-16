@@ -29,7 +29,6 @@ function init() {
     done
     echo "File extension: ${extension}"
 
-    # Create the folder
     mkdir ${slug}
     echo "Folder created: ${slug}"
 
@@ -38,8 +37,6 @@ function init() {
         touch ${slug}/${file}.${extension}
         echo "File created: ${slug}/${file}.${extension}"
     done
-
-    # Add a README.md file with the name of the language
     echo "# Materialize + ${name} Example" > ${slug}/README.md
 
     echo "Folder structure:"
