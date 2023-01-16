@@ -43,7 +43,7 @@ git commit -m "Add my example"
 git push origin my-branch
 ```
 
-Then submit a pull request through the GitHub website.
+That's it — you're ready to submit a pull request!
 
 ## Issues
 
