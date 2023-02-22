@@ -6,15 +6,19 @@ const client = new Client({
     user: "MATERIALIZE_USERNAME",
     database: "materialize",
     password: "APP_SPECIFIC_PASSWORD",
-    hostname: "MATERIALIZE_HOST",
-    port: 6875
+    host: "MATERIALIZE_HOST",
+    port: 6875,
+    ssl: true
 });
 
 async function main() {
     try {
         await client.connect();
         const res = await client.query(
-            `CREATE SOURCE counter FROM LOAD GENERATOR COUNTER`
+            `CREATE SOURCE IF NOT EXISTS counter
+            FROM LOAD GENERATOR COUNTER
+            (TICK INTERVAL '500ms')
+            WITH (SIZE = '3xsmall');`
             );
         console.log(res);
     } catch(e) {

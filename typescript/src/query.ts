@@ -6,14 +6,15 @@ const client = new Client({
   user: "MATERIALIZE_USERNAME",
   database: "materialize",
   password: "APP_SPECIFIC_PASSWORD",
-  hostname: "MATERIALIZE_HOST",
-  port: 6875
+  host: "MATERIALIZE_HOST",
+  port: 6875,
+  ssl: true
 });
 
 async function main() {
   try {
     await client.connect();
-    const res = await client.query('SELECT * FROM market_orders_2');
+    const res = await client.query('SELECT * FROM counter_sum');
     console.log(res.rows);
   } catch(e) {
     console.log("error: ", e);
