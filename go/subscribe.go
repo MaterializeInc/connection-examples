@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"encoding/json"
 
 	"github.com/jackc/pgx/v4"
 )
@@ -10,7 +11,7 @@ import (
 func main() {
 
 	ctx := context.Background()
-	connStr := "postgres://MATERIALIZE_USERNAME:APP_SPECIFIC_PASSWORD@MATERIALIZE_HOST:6875/materialize"
+	connStr := "postgres://MATERIALIZE_USERNAME:APP_SPECIFIC_PASSWORD@MATERIALIZE_HOST:6875/materialize?ssl_mode=require"
 
 	conn, err := pgx.Connect(ctx, connStr)
 	if err != nil {
@@ -26,7 +27,7 @@ func main() {
 	}
 	defer tx.Rollback(ctx)
 
-	_, err = tx.Exec(ctx, "DECLARE c CURSOR FOR SUBSCRIBE my_view")
+	_, err = tx.Exec(ctx, "DECLARE c CURSOR FOR SUBSCRIBE (SELECT sum FROM counter_sum) WITH (PROGRESS);")
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -37,8 +38,10 @@ func main() {
 		MzTimestamp int64
 		MzDiff      int
 		MzValue     int
+		Sum			int
 	}
 
+	state := NewState(false)
 	for {
 		rows, err := tx.Query(ctx, "FETCH ALL c")
 		if err != nil {
@@ -49,11 +52,25 @@ func main() {
 
 		for rows.Next() {
 			var r subscribeResult
-			if err := rows.Scan(&r.MzTimestamp, &r.MzDiff, &r.MzValue); err != nil {
+			if err := rows.Scan(&r.MzTimestamp, &r.MzDiff, &r.MzValue, &r.Sum); err != nil {
 				fmt.Println(err)
 				tx.Rollback(ctx)
 				return
 			}
+
+			jsonData := []byte(fmt.Sprintf(`{
+				"value": {
+					"sum": %d
+				}
+			}`, r.Sum));
+			var update Update
+			json.Unmarshal(jsonData, &update)
+
+			state.Update(Update{
+				Value: update,
+				Diff:  1,
+			}, r.MzTimestamp)
+
 			fmt.Printf("%d %d %d\n", r.MzTimestamp, r.MzDiff, r.MzValue)
 			// operate on subscribeResult
 		}

@@ -10,7 +10,7 @@ import (
 func main() {
 
 	ctx := context.Background()
-	connStr := "postgres://MATERIALIZE_USERNAME:APP_SPECIFIC_PASSWORD@MATERIALIZE_HOST:6875/materialize"
+	connStr := "postgres://MATERIALIZE_USERNAME:APP_SPECIFIC_PASSWORD@MATERIALIZE_HOST:6875/materialize?ssl_mode=require"
 
 	conn, err := pgx.Connect(ctx, connStr)
 	if err != nil {
@@ -19,11 +19,9 @@ func main() {
 		fmt.Println("Connected to Materialize!")
 	}
 
-	createViewSQL := `CREATE VIEW market_orders_2 AS
-                    SELECT
-                        val->>'symbol' AS symbol,
-                        (val->'bid_price')::float AS bid_price
-                    FROM (SELECT text::jsonb AS val FROM market_orders_raw)`
+	createViewSQL := `CREATE MATERIALIZED VIEW IF NOT EXISTS counter_sum AS
+						SELECT sum(counter)
+						FROM counter;`
 	_, err = conn.Exec(ctx, createViewSQL)
 	if err != nil {
 		fmt.Println(err)
