@@ -5,7 +5,7 @@ You connect to Materialize the same way you [connect to PostgreSQL with `deno-po
 To run the example, run the following command:
 
 ```
-deno run --allow-net --allow-env connection.ts
+deno run --allow-net --allow-env --allow-read --allow-write --unstable connection.ts
 ```
 
 ### Examples:

@@ -5,7 +5,8 @@ const client = new Client({
     database: "materialize",
     password: "APP_SPECIFIC_PASSWORD",
     hostname: "MATERIALIZE_HOST",
-    port: 6875
+    port: 6875,
+    ssl: true,
 })
 
 const main = async ({ response }: { response: any }) => {
@@ -13,7 +14,10 @@ const main = async ({ response }: { response: any }) => {
         await client.connect()
 
         await client.queryObject(
-            `CREATE SOURCE counter FROM LOAD GENERATOR COUNTER`
+            `CREATE SOURCE IF NOT EXISTS counter
+            FROM LOAD GENERATOR COUNTER
+            (TICK INTERVAL '500ms')
+            WITH (SIZE = '3xsmall');`
         );
 
         const result = await client.queryObject("SHOW SOURCES")
