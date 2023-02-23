@@ -4,7 +4,7 @@ const client = new Client({
     user: "MATERIALIZE_USERNAME",
     database: "materialize",
     password: "APP_SPECIFIC_PASSWORD",
-    host: "MATERIALIZE_HOST",
+    hostname: "MATERIALIZE_HOST",
     port: 6875,
     ssl: true,
 })
