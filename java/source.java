@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 
 public class App {
 
-    private final String url = "jdbc:postgresql://MATERIALIZE_HOST:6875/materialize";
+    private final String url = "jdbc:postgresql://MATERIALIZE_HOST:6875/materialize?ssl_mode=require";
     private final String user = "MATERIALIZE_USERNAME";
     private final String password = "MATERIALIZE_PASSWORD";
 
@@ -21,16 +21,16 @@ public class App {
         Properties props = new Properties();
         props.setProperty("user", user);
         props.setProperty("password", password);
-        props.setProperty("ssl","true");
 
         return DriverManager.getConnection(url, props);
 
     }
 
     public void source() {
-
-        String SQL = "CREATE SOURCE counter FROM "
-                   + "LOAD GENERATOR COUNTER";
+        String SQL = "CREATE SOURCE IF NOT EXISTS counter"
+                   + "FROM LOAD GENERATOR COUNTER"
+                   + "(TICK INTERVAL '500ms')"
+                   + "WITH (SIZE = '3xsmall');";
 
         try (Connection conn = connect()) {
             Statement st = conn.createStatement();

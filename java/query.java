@@ -20,7 +20,6 @@ public class App {
         Properties props = new Properties();
         props.setProperty("user", user);
         props.setProperty("password", password);
-        props.setProperty("ssl","true");
 
         return DriverManager.getConnection(url, props);
 

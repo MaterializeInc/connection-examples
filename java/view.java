@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 
 public class App {
 
-    private final String url = "jdbc:postgresql://MATERIALIZE_HOST:6875/materialize";
+    private final String url = "jdbc:postgresql://MATERIALIZE_HOST:6875/materialize?ssl_mode=require";
     private final String user = "MATERIALIZE_USERNAME";
     private final String password = "MATERIALIZE_PASSWORD";
 
@@ -21,18 +21,15 @@ public class App {
         Properties props = new Properties();
         props.setProperty("user", user);
         props.setProperty("password", password);
-        props.setProperty("ssl","true");
 
         return DriverManager.getConnection(url, props);
 
     }
 
     public void view() {
-        String SQL = "CREATE VIEW market_orders_2 AS "
-                   + "SELECT "
-                   + "    val->>'symbol' AS symbol, "
-                   + "    (val->'bid_price')::float AS bid_price "
-                   + "FROM (SELECT text::jsonb AS val FROM market_orders_raw_2)";
+        String SQL = "CREATE MATERIALIZED VIEW IF NOT EXISTS counter_sum AS"
+                   + "SELECT sum(counter)"
+                   + "FROM counter;";
 
         try (Connection conn = connect()) {
             Statement st = conn.createStatement();
