@@ -1,14 +1,19 @@
 require 'pg'
 
-conn = PG.connect(host:"MATERIALIZE_HOST", port: 6875, user: "MATERIALIZE_USERNAME", password: "MATERIALIZE_PASSWORD")
+conn = PG.connect(
+  host: "MATERIALIZE_HOST",
+  port: 6875,
+  dbname: "materialize",
+  user: "MATERIALIZE_USERNAME",
+  password: "MATERIALIZE_PASSWORD",
+  sslmode: 'require'
+)
 
 # Create a view
 view = conn.exec(
-    "CREATE VIEW market_orders_2 AS
-            SELECT
-                val->>'symbol' AS symbol,
-                (val->'bid_price')::float AS bid_price
-            FROM (SELECT text::jsonb AS val FROM market_orders_raw)"
+    "CREATE MATERIALIZED VIEW IF NOT EXISTS counter_sum AS
+      SELECT sum(counter)
+      FROM counter;"
 );
 puts view.inspect
 
