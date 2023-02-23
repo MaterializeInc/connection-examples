@@ -12,7 +12,10 @@ const client = new Client({
 async function main() {
     await client.connect();
     const res = await client.query(
-        `CREATE SOURCE counter FROM LOAD GENERATOR COUNTER`
+        `CREATE SOURCE IF NOT EXISTS counter
+        FROM LOAD GENERATOR COUNTER
+        (TICK INTERVAL '500ms')
+        WITH (SIZE = '3xsmall');`
         );
     console.log(res);
 }

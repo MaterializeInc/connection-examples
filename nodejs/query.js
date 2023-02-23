@@ -11,7 +11,7 @@ const client = new Client({
 
 async function main() {
   await client.connect();
-  const res = await client.query('SELECT * FROM my_view');
+  const res = await client.query('SELECT * FROM counter_sum');
   console.log(res.rows);
 };
 
