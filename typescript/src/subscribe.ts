@@ -42,7 +42,7 @@ async function main() {
         if (progress) {
           if (updated) {
             updated = false;
-            console.log(state.getValues());
+            console.log(state.getStateAsArray());
           }
         } else {
           // Update the state with the last data
