@@ -1,9 +1,9 @@
 const { Client } = require('pg');
 
 const client = new Client({
-    user: MATERIALIZE_USERNAME,
-    password: MATERIALIZE_PASSWORD,
-    host: MATERIALIZE_HOST,
+    user: "MATERIALIZE_USERNAME",
+    password: "MATERIALIZE_PASSWORD",
+    host: "MATERIALIZE_HOST",
     port: 6875,
     database: 'materialize',
     ssl: true
@@ -12,7 +12,10 @@ const client = new Client({
 async function main() {
     await client.connect();
     const res = await client.query(
-        `CREATE SOURCE counter FROM LOAD GENERATOR COUNTER`
+        `CREATE SOURCE IF NOT EXISTS counter
+        FROM LOAD GENERATOR COUNTER
+        (TICK INTERVAL '500ms')
+        WITH (SIZE = '3xsmall');`
         );
     console.log(res);
 }
