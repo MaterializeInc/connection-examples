@@ -4,7 +4,7 @@ export interface Update<T> {
 }
 
 export default class State<T> {
-  private state: Map<T, number>;
+  private state: Map<string, number>;
   private timestamp: number;
   private valid: boolean;
   private history: Array<Update<T>> | undefined;
@@ -18,15 +18,11 @@ export default class State<T> {
     }
   }
 
-  getState(): Readonly<Map<T, any>> {
-    return structuredClone(this.state);
-  }
-
-  getStateAsArray(): Readonly<Array<T>> {
+  getState(): Readonly<Array<T>> {
     const list: Array<T> = new Array<T>();
 
     Array.from(this.state.entries()).forEach(([key, value]) => {
-      const clone = structuredClone(key);
+      const clone = JSON.parse(key);
       let i = 0;
       while (i< value) {
         list.push(clone);
@@ -55,8 +51,9 @@ export default class State<T> {
     }
   }
 
-  private process({ value, diff }: Update<T>) {
+  private process({ value: _value, diff }: Update<T>) {
     // Count value starts as a NaN
+    const value = JSON.stringify(_value);
     const count = this.state.has(value) ? (this.state.get(value) as number + diff) : diff;
 
     if (count <= 0) {
@@ -67,25 +64,15 @@ export default class State<T> {
 
 
     if (this.history) {
-      this.history.push({ value, diff });
+      this.history.push({ value: _value, diff });
     }
   }
 
-  update(update: Update<T>, timestamp: number) {
-    this.validate(timestamp);
-    this.timestamp = timestamp;
-    this.process(update);
-  }
-
-  batchUpdate(updates: Array<Update<T>>, timestamp: number) {
+  update(updates: Array<Update<T>>, timestamp: number) {
     if (updates.length > 0) {
       this.validate(timestamp);
       this.timestamp = timestamp;
       updates.forEach(this.process.bind(this));
     }
-  }
-
-  toString() {
-    return JSON.stringify(this.state);
   }
 };

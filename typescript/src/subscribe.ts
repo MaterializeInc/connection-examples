@@ -1,6 +1,6 @@
 // node 14+ cjs named exports not found in pg
 import pkg from 'pg';
-import State from './state';
+import State, { Update } from './state';
 const { Client } = pkg;
 
 const client = new Client({
@@ -23,8 +23,8 @@ async function main() {
     await client.query('BEGIN');
     await client.query('DECLARE c CURSOR FOR SUBSCRIBE (SELECT sum FROM counter_sum) WITH (PROGRESS);');
 
-    let updated = false;
     const state = new State<CounterSum>();
+    const buffer: Array<Update<CounterSum>> = [];
 
     // Loop indefinitely
     while (true) {
@@ -35,26 +35,22 @@ async function main() {
           mz_timestamp: ts,
           mz_progressed: progress,
           mz_diff: diff,
-          ...rowData
+          sum,
          } = row;
 
         //  When a progress is detected, get the last values
         if (progress) {
-          if (updated) {
-            updated = false;
-            console.log(state.getStateAsArray());
+          if (buffer.length > 0) {
+            try {
+              state.update(buffer, ts);
+            } catch (err) {
+              console.error(err);
+            } finally {
+              buffer.splice(0, buffer.length);
+            }
           }
         } else {
-          // Update the state with the last data
-          updated = true;
-          try {
-              state.update({
-                  value: rowData,
-                  diff: Number(diff),
-              }, Number(ts));
-          } catch (err) {
-            console.error(err);
-          }
+            buffer.push({ value: { sum }, diff });
         }
       });
     }
