@@ -1,5 +1,6 @@
 import { Client } from "https://deno.land/x/postgres/mod.ts";
-import { State } from './state.ts';
+import { Update } from "./state";
+import State, { Update } from "./state.ts";
 
 const client = new Client({
   user: "MATERIALIZE_USERNAME",
@@ -22,7 +23,7 @@ const main = async ({ response }: { response: any }) => {
         await client.queryObject('DECLARE c CURSOR FOR SUBSCRIBE (SELECT sum FROM counter_sum) WITH (PROGRESS);');
 
         while (true) {
-          let updated = false;
+          let buffer: Array<Update<CounterSum>> = [];
           const state = new State<CounterSum>();
 
           // Loop indefinitely
@@ -34,26 +35,23 @@ const main = async ({ response }: { response: any }) => {
                 mz_timestamp: ts,
                 mz_progressed: progress,
                 mz_diff: diff,
-                ...rowData
-              } = row;
+                sum,
+               } = row;
 
               //  When a progress is detected, get the last values
               if (progress) {
-                if (updated) {
-                  updated = false;
-                  console.log(state.getValues());
+                if (buffer.length > 0) {
+                  try {
+                    state.update(buffer, ts);
+                  } catch (err) {
+                    console.error(err);
+                  } finally {
+                    console.log("State: ", state.getState());
+                    buffer.splice(0, buffer.length);
+                  }
                 }
               } else {
-                // Update the state with the last data
-                updated = true;
-                try {
-                    state.update({
-                        value: rowData,
-                        diff: Number(diff),
-                    }, Number(ts));
-                } catch (err) {
-                  console.error(err);
-                }
+                  buffer.push({ value: { sum }, diff });
               }
           });
         }
