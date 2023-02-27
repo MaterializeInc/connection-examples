@@ -6,9 +6,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 
-public class App {
+public class View {
 
-    private final String url = "jdbc:postgresql://MATERIALIZE_HOST:6875/materialize?ssl_mode=require";
+    private final String url = "jdbc:postgresql://MATERIALIZE_HOST:6875/materialize?sslmode=require";
     private final String user = "MATERIALIZE_USERNAME";
     private final String password = "MATERIALIZE_PASSWORD";
 
@@ -42,7 +42,7 @@ public class App {
     }
 
     public static void main(String[] args) {
-        App app = new App();
+        View app = new View();
         app.view();
     }
 }
