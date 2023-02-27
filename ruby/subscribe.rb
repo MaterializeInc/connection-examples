@@ -14,6 +14,7 @@ conn.exec('DECLARE c CURSOR FOR SUBSCRIBE (SELECT sum FROM counter_sum) WITH (PR
 
 updated = false
 state = State.new(false)
+buffer = []
 
 # Loop indefinitely
 loop do
@@ -25,20 +26,19 @@ loop do
       diff = row["mz_diff"]
       rowData = { sum: row["sum"] }
 
-      #  When a progress is detected, get the last values
+      #  When a progress is detected, get the state
       if progress == 't'
         if updated
           updated = false
-          puts state.get_values
+
+          state.update(buffer, ts.to_i)
+          buffer = []
+          puts state.get_state
         end
       else
         # Update the state with the last data
         updated = true
-        begin
-          state.update({ value: rowData, diff: diff.to_i }, ts.to_i)
-        rescue StandardError => e
-          puts "Error: #{e}"
-        end
+        buffer.push({ value: rowData, diff: diff.to_i })
       end
     end
   end
