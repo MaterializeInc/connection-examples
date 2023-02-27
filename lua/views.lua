@@ -1,7 +1,7 @@
 local dump = require('utils').dump
 local driver = require "luasql.postgres"
 local env = assert (driver.postgres())
-local con = assert(env:connect("postgresql://MATERIALIZE_USERNAME:MATERIALIZE_PASSWORD@MATERIALIZE_HOST:6875/materialize?sslmode=enabled"))
+local con = assert(env:connect("postgresql://MATERIALIZE_USERNAME:MATERIALIZE_PASSWORD@MATERIALIZE_HOST:6875/materialize?sslmode=require"))
 
 con:execute[[
     CREATE MATERIALIZED VIEW IF NOT EXISTS counter_sum AS
