@@ -6,82 +6,51 @@ import (
 )
 
 type Update struct {
-	Key   string      `json:"key,omitempty"`
-	Value interface{} `json:"value"`
-	Diff  int         `json:"diff"`
+	Value interface{}
+	Diff  int
 }
 
 type State struct {
-	state      map[string]interface{}
-	stateCount map[string]int
-	timestamp  int64
-	valid      bool
-	history    []Update
+	state     map[string]int
+	timestamp int64
+	valid     bool
+	history   []Update
 }
 
 func NewState(collectHistory bool) *State {
-	s := &State{
-		state:      make(map[string]interface{}),
-		stateCount: make(map[string]int),
-		timestamp:  0,
-		valid:      true,
+	state := make(map[string]int)
+	history := []Update{}
+
+	return &State{
+		state:     state,
+		timestamp: 0,
+		valid:     true,
+		history:   history,
 	}
-	if collectHistory {
-		s.history = []Update{}
+}
+
+func (s *State) getState() []interface{} {
+	list := []interface{}{}
+
+	for key, value := range s.state {
+		clone := make(map[string]interface{})
+		err := json.Unmarshal([]byte(key), &clone)
+		if err != nil {
+			continue
+		}
+		for i := 0; i < value; i++ {
+			list = append(list, clone)
+		}
 	}
-	return s
+
+	return list
 }
 
-func (s *State) Get(key string) interface{} {
-	return s.state[key]
-}
-
-func (s *State) GetKeys() []string {
-	keys := make([]string, len(s.state))
-	i := 0
-	for k := range s.state {
-		keys[i] = k
-		i++
-	}
-	return keys
-}
-
-func (s *State) GetValues() []interface{} {
-	values := make([]interface{}, len(s.state))
-	i := 0
-	for _, v := range s.state {
-		values[i] = v
-		i++
-	}
-	return values
-}
-
-func (s *State) IsValid() bool {
-	return s.valid
-}
-
-func (s *State) GetTimestamp() int64 {
-	return s.timestamp
-}
-
-func (s *State) GetHistory() []Update {
+func (s *State) getHistory() []Update {
 	return s.history
 }
 
-func (s *State) ApplyDiff(key string, diff int) {
-	if _, ok := s.stateCount[key]; !ok {
-		s.stateCount[key] = diff
-	} else {
-		s.stateCount[key] += diff
-	}
-}
-
-func (s *State) Hash(value interface{}) string {
-	bytes, _ := json.Marshal(value)
-	return string(bytes)
-}
-
-func (s *State) Validate(timestamp int64) error {
+func (s *State) validate(timestamp int64) error {
 	if !s.valid {
 		return errors.New("Invalid state.")
 	} else if timestamp < s.timestamp {
@@ -91,45 +60,41 @@ func (s *State) Validate(timestamp int64) error {
 	return nil
 }
 
-func (s *State) Process(update Update) {
-	key := update.Key
-	if key == "" {
-		key = s.Hash(update.Value)
+func (s *State) process(update Update) {
+	// Count value starts as a NaN
+	value, err := json.Marshal(update.Value)
+	if err != nil {
+		return
 	}
-	s.ApplyDiff(key, update.Diff)
-	count := s.stateCount[key]
 
-	if len(s.history) > 0 {
-		s.history = append(s.history, update)
+	count, ok := s.state[string(value)]
+	if !ok {
+		count = 0
 	}
+
+	count += update.Diff
 
 	if count <= 0 {
-		delete(s.state, key)
-		delete(s.stateCount, key)
+		delete(s.state, string(value))
 	} else {
-		s.state[key] = update.Value
+		s.state[string(value)] = count
+	}
+
+	if s.history != nil {
+		s.history = append(s.history, update)
 	}
 }
 
-func (s *State) Update(update Update, timestamp int64) error {
-	if err := s.Validate(timestamp); err != nil {
-		return err
-	}
-	s.timestamp = timestamp
-	s.Process(update)
-	return nil
-}
-
-func (s *State) BatchUpdate(updates []Update, timestamp int64) error {
-	if len(updates) == 0 {
-		return nil
-	}
-	if err := s.Validate(timestamp); err != nil {
-		return err
-	}
-	s.timestamp = timestamp
-	for _, update := range updates {
-		s.Process(update)
+func (s *State) Update(updates []Update, timestamp int64) error {
+	if len(updates) > 0 {
+		err := s.validate(timestamp)
+		if err != nil {
+			return err
+		}
+		s.timestamp = timestamp
+		for _, update := range updates {
+			s.process(update)
+		}
 	}
 	return nil
 }

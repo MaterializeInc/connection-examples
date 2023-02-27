@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"encoding/json"
 
-	"github.com/jackc/pgx/v4"
+    "github.com/jackc/pgx/v4"
 )
 
 func main() {
@@ -36,12 +36,13 @@ func main() {
 	// Define a struct to hold the data returned from the query
 	type subscribeResult struct {
 		MzTimestamp int64
-		MzDiff      int
-		MzValue     int
-		Sum			int
+		MzProgress  bool
+		MzDiff      pgx.NullInt64
+		Sum			pgx.NullInt64
 	}
 
 	state := NewState(false)
+	var buffer []Update
 	for {
 		rows, err := tx.Query(ctx, "FETCH ALL c")
 		if err != nil {
@@ -52,27 +53,30 @@ func main() {
 
 		for rows.Next() {
 			var r subscribeResult
-			if err := rows.Scan(&r.MzTimestamp, &r.MzDiff, &r.MzValue, &r.Sum); err != nil {
+
+			if err := rows.Scan(&r.MzTimestamp, &r.MzProgress, &r.MzDiff, &r.Sum); err != nil {
 				fmt.Println(err)
 				tx.Rollback(ctx)
 				return
 			}
 
-			jsonData := []byte(fmt.Sprintf(`{
-				"value": {
-					"sum": %d
-				}
-			}`, r.Sum));
-			var update Update
-			json.Unmarshal(jsonData, &update)
+			if r.MzProgress {
+				state.Update(buffer, r.MzTimestamp)
+				fmt.Println(state.getState())
 
-			state.Update(Update{
-				Value: update,
-				Diff:  1,
-			}, r.MzTimestamp)
+				// Clean buffer
+				buffer = []Update{}
+			} else {
+				jsonData := []byte(fmt.Sprintf(`{
+					"value": {
+						"sum": %d
+					}
+				}`, r.Sum));
+				var update Update
+				json.Unmarshal(jsonData, &update)
 
-			fmt.Printf("%d %d %d\n", r.MzTimestamp, r.MzDiff, r.MzValue)
-			// operate on subscribeResult
+				buffer = append(buffer, update)
+			}
 		}
 	}
 
