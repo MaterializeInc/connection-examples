@@ -20,16 +20,16 @@ with conn.cursor() as cur:
         if progress:
             if updated:
                 updated = False
-                print(state.getValues())
+                print(state.get_state())
         else:
             rowData = { "sum": int(row[3]) }
 
             # Update the state with the last data
             updated = True
             try:
-                state.update({
+                state.update([{
                     'value': rowData,
                     'diff': float(diff),
-                }, float(ts))
+                }], float(ts))
             except Exception as err:
                 print(err)
