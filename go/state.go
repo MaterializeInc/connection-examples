@@ -3,22 +3,27 @@ package main
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 )
+
+type SingleValue struct {
+	Value interface{} `json:"Value"`
+}
 
 type Update struct {
 	Value interface{}
-	Diff  int
+	Diff  int64
 }
 
 type State struct {
-	state     map[string]int
+	state     map[string]int64
 	timestamp int64
 	valid     bool
 	history   []Update
 }
 
 func NewState(collectHistory bool) *State {
-	state := make(map[string]int)
+	state := make(map[string]int64)
 	history := []Update{}
 
 	return &State{
@@ -36,10 +41,11 @@ func (s *State) getState() []interface{} {
 		clone := make(map[string]interface{})
 		err := json.Unmarshal([]byte(key), &clone)
 		if err != nil {
+			fmt.Println(err);
 			continue
 		}
-		for i := 0; i < value; i++ {
-			list = append(list, clone)
+		for i := int64(0); i < value; i++ {
+			list = append(list, clone["Value"])
 		}
 	}
 
@@ -61,8 +67,9 @@ func (s *State) validate(timestamp int64) error {
 }
 
 func (s *State) process(update Update) {
-	// Count value starts as a NaN
-	value, err := json.Marshal(update.Value)
+	var sv = SingleValue { Value: update.Value }
+	value, err := json.Marshal(sv)
+
 	if err != nil {
 		return
 	}

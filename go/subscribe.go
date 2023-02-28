@@ -3,10 +3,14 @@ package main
 import (
 	"context"
 	"fmt"
-	"encoding/json"
 
     "github.com/jackc/pgx/v4"
+	"database/sql"
 )
+
+type Sum struct {
+	sum float64 `json:"sum"`
+}
 
 func main() {
 
@@ -37,8 +41,8 @@ func main() {
 	type subscribeResult struct {
 		MzTimestamp int64
 		MzProgress  bool
-		MzDiff      pgx.NullInt64
-		Sum			pgx.NullInt64
+		MzDiff      sql.NullInt64
+		Sum			sql.NullFloat64
 	}
 
 	state := NewState(false)
@@ -67,14 +71,7 @@ func main() {
 				// Clean buffer
 				buffer = []Update{}
 			} else {
-				jsonData := []byte(fmt.Sprintf(`{
-					"value": {
-						"sum": %d
-					}
-				}`, r.Sum));
-				var update Update
-				json.Unmarshal(jsonData, &update)
-
+				var update = Update{Diff: r.MzDiff.Int64, Value: Sum{ sum: r.Sum.Float64} }
 				buffer = append(buffer, update)
 			}
 		}
