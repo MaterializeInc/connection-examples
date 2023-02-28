@@ -2,11 +2,9 @@
 // Include the Postgres connection details
 require 'connection.php';
 
-$sql = "CREATE VIEW market_orders_2 AS
-            SELECT
-                val->>'symbol' AS symbol,
-                (val->'bid_price')::float AS bid_price
-            FROM (SELECT text::jsonb AS val FROM market_orders_raw_2)";
+$sql = "CREATE MATERIALIZED VIEW IF NOT EXISTS counter_sum AS
+        SELECT sum(counter)
+        FROM counter;";
 
 $statement = $connection->prepare($sql);
 $statement->execute();
