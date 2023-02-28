@@ -7,12 +7,12 @@ import (
 )
 
 type SingleValue struct {
-	Value interface{} `json:"Value"`
+	Value interface{} `json:"value"`
 }
 
 type Update struct {
-	Value interface{}
-	Diff  int64
+	value interface{} `json:"value"`
+	diff  int64 `json:"diff"`
 }
 
 type State struct {
@@ -44,8 +44,9 @@ func (s *State) getState() []interface{} {
 			fmt.Println(err);
 			continue
 		}
+
 		for i := int64(0); i < value; i++ {
-			list = append(list, clone["Value"])
+			list = append(list, clone["value"])
 		}
 	}
 
@@ -67,10 +68,11 @@ func (s *State) validate(timestamp int64) error {
 }
 
 func (s *State) process(update Update) {
-	var sv = SingleValue { Value: update.Value }
+	var sv = SingleValue { Value: update.value }
 	value, err := json.Marshal(sv)
-
+	// fmt.Println(sv, value);
 	if err != nil {
+		fmt.Println(err);
 		return
 	}
 
@@ -79,7 +81,7 @@ func (s *State) process(update Update) {
 		count = 0
 	}
 
-	count += update.Diff
+	count += update.diff
 
 	if count <= 0 {
 		delete(s.state, string(value))

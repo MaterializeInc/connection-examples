@@ -15,7 +15,7 @@ type Sum struct {
 func main() {
 
 	ctx := context.Background()
-	connStr := "postgres://MATERIALIZE_USERNAME:APP_SPECIFIC_PASSWORD@MATERIALIZE_HOST:6875/materialize?ssl_mode=require"
+	connStr := "postgres://MATERIALIZE_USERNAME:APP_SPECIFIC_PASSWORD@MATERIALIZE_HOST:6875/materialize?sslmode=require"
 
 	conn, err := pgx.Connect(ctx, connStr)
 	if err != nil {
@@ -71,7 +71,7 @@ func main() {
 				// Clean buffer
 				buffer = []Update{}
 			} else {
-				var update = Update{Diff: r.MzDiff.Int64, Value: Sum{ sum: r.Sum.Float64} }
+				var update = Update{ diff: r.MzDiff.Int64, value: map[string]float64{"sum": r.Sum.Float64}}
 				buffer = append(buffer, update)
 			}
 		}
