@@ -16,9 +16,6 @@ while(true) do
         local ts = mz_timestamp
         local progress = mz_progressed
         local diff = mz_diff
-        local rowData = { sum }
-
-        print(progress)
 
         -- When a progress is detected, get the last values
         if progress ~= 'f' then
@@ -26,17 +23,17 @@ while(true) do
                 updated = false;
 
                 -- Update state
-                state.update(buffer, ts);
+                state:update(buffer, ts);
                 buffer = {};
 
                 -- Print state
-                print(table.concat(state.getState(), ','));
+                print("Sum: ", table.concat(state:getState(), ','));
             end
         else
             -- Update the state with the last data
             updated = true
             local update = {
-                value = rowData,
+                value = sum,
                 diff = tonumber(diff)
             }
             table.insert(buffer, update);
