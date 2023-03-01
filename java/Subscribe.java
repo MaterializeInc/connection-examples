@@ -24,7 +24,6 @@ public class Subscribe {
         props.setProperty("password", password);
 
         return DriverManager.getConnection(url, props);
-
     }
 
     public void subscribe() {
@@ -79,15 +78,7 @@ public class Subscribe {
 /*
  * State class to handle updates from a subscription.
  */
-record Update<T>(T value, int diff) {
-    public T getValue() {
-        return value;
-    }
-
-    public int getDiff() {
-        return diff;
-    }
-}
+record Update<T>(T value, int diff) {};
 
 class State<T> {
   private final HashMap<T, Integer> state;
@@ -135,8 +126,8 @@ class State<T> {
   }
 
   private void process(Update<T> update) {
-    T value = update.getValue();
-    int diff = update.getDiff();
+    T value = update.value();
+    int diff = update.diff();
 
     int count = state.containsKey(value) ? state.get(value) + diff : diff;
 
