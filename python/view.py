@@ -8,11 +8,9 @@ conn = psycopg2.connect(dsn)
 conn.autocommit = True
 
 with conn.cursor() as cur:
-    cur.execute("CREATE VIEW market_orders_2 AS " \
-            "SELECT " \
-                "val->>'symbol' AS symbol, " \
-                "(val->'bid_price')::float AS bid_price " \
-            "FROM (SELECT text::jsonb AS val FROM market_orders_raw_2)")
+    cur.execute("""CREATE MATERIALIZED VIEW IF NOT EXISTS counter_sum AS
+            SELECT sum(counter)
+            FROM counter;""")
 
 with conn.cursor() as cur:
     cur.execute("SHOW VIEWS")

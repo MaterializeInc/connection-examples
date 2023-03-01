@@ -8,7 +8,10 @@ conn = psycopg2.connect(dsn)
 conn.autocommit = True
 
 with conn.cursor() as cur:
-    cur.execute("CREATE SOURCE counter FROM LOAD GENERATOR COUNTER")
+    cur.execute("""CREATE SOURCE IF NOT EXISTS counter
+            FROM LOAD GENERATOR COUNTER
+            (TICK INTERVAL '500ms')
+            WITH (SIZE = '3xsmall');""")
 
 with conn.cursor() as cur:
     cur.execute("SHOW SOURCES")
