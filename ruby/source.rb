@@ -1,11 +1,20 @@
 require 'pg'
 
-conn = PG.connect(host:"MATERIALIZE_HOST", port: 6875, user: "MATERIALIZE_USERNAME", password: "MATERIALIZE_PASSWORD")
+conn = PG.connect(
+  host: "MATERIALIZE_HOST",
+  port: 6875,
+  dbname: "materialize",
+  user: "MATERIALIZE_USERNAME",
+  password: "MATERIALIZE_PASSWORD",
+  sslmode: 'require'
+)
 
 # Create a source
 src = conn.exec(
-    "CREATE SOURCE counter
-      FROM LOAD GENERATOR COUNTER
+    "CREATE SOURCE IF NOT EXISTS counter
+    FROM LOAD GENERATOR COUNTER
+    (TICK INTERVAL '500ms')
+    WITH (SIZE = '3xsmall')
     "
 );
 
