@@ -4,7 +4,8 @@ const client = new Client({
     database: "materialize",
     password: "APP_SPECIFIC_PASSWORD",
     hostname: "MATERIALIZE_HOST",
-    port: 6875
+    port: 6875,
+    ssl: true,
 })
 const main = async ({ response }: { response: any }) => {
     try {
@@ -22,3 +23,6 @@ const main = async ({ response }: { response: any }) => {
     }
 }
 export { main }
+
+// Call the main function
+main({ response: {} })

@@ -5,7 +5,8 @@ const client = new Client({
     database: "materialize",
     password: "APP_SPECIFIC_PASSWORD",
     hostname: "MATERIALIZE_HOST",
-    port: 6875
+    port: 6875,
+    ssl: true,
 })
 
 const main = async ({ response }: { response: any }) => {
@@ -13,11 +14,9 @@ const main = async ({ response }: { response: any }) => {
         await client.connect()
 
         await client.queryObject(
-            `CREATE VIEW market_orders AS
-                SELECT
-                    val->>'symbol' AS symbol,
-                    (val->'bid_price')::float AS bid_price
-                FROM (SELECT text::jsonb AS val FROM market_orders_raw)`
+            `CREATE MATERIALIZED VIEW IF NOT EXISTS counter_sum AS
+            SELECT sum(counter)
+            FROM counter;`
         );
 
         const result = await client.queryObject("SHOW VIEWS")

@@ -5,19 +5,20 @@ const client = new Client({
     database: "materialize",
     password: "APP_SPECIFIC_PASSWORD",
     hostname: "MATERIALIZE_HOST",
-    port: 6875
+    port: 6875,
+    ssl: true,
 })
 
 /*
     Alternatively, you can use the following syntax to connect to Materialize:
     const client = new Client('postgres://MATERIALIZE_USERNAME@MATERIALIZE_HOST:6875/materialize')
 */
-
 const main = async ({ response }: { response: any }) => {
     try {
         await client.connect()
         /* Work with Materialize */
     } catch (err) {
+        console.error(err);
         response.status = 500
         response.body = {
             success: false,
@@ -27,4 +28,8 @@ const main = async ({ response }: { response: any }) => {
         await client.end()
     }
 }
+
 export { main }
+
+// Call the main function
+main({ response: {} })
