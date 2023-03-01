@@ -10,7 +10,7 @@ import (
 func main() {
 
 	ctx := context.Background()
-	connStr := "postgres://MATERIALIZE_USERNAME:APP_SPECIFIC_PASSWORD@MATERIALIZE_HOST:6875/materialize"
+	connStr := "postgres://MATERIALIZE_USERNAME:APP_SPECIFIC_PASSWORD@MATERIALIZE_HOST:6875/materialize?sslmode=require"
 
 	conn, err := pgx.Connect(ctx, connStr)
 	if err != nil {
