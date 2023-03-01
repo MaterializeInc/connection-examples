@@ -1,9 +1,9 @@
 const { Client } = require('pg');
 
 const client = new Client({
-  user: MATERIALIZE_USERNAME,
-  password: MATERIALIZE_PASSWORD,
-  host: MATERIALIZE_HOST,
+  user: "MATERIALIZE_USERNAME",
+  password: "MATERIALIZE_PASSWORD",
+  host: "MATERIALIZE_HOST",
   port: 6875,
   database: 'materialize',
   ssl: true
@@ -11,7 +11,7 @@ const client = new Client({
 
 async function main() {
   await client.connect();
-  const res = await client.query('SELECT * FROM my_view');
+  const res = await client.query('SELECT * FROM counter_sum');
   console.log(res.rows);
 };
 
