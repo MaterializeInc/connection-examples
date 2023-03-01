@@ -1,18 +1,18 @@
+use crate::view::create_materialized_view;
 use insert::insert;
 use query::run_query;
 use source::create_source;
-use table::create_table;
-use crate::view::create_materialized_view;
 use subscribe::subscribe;
+use table::create_table;
 
+mod connection;
 mod insert;
 mod query;
 mod source;
+mod state;
 mod subscribe;
-mod view;
-mod connection;
 mod table;
-
+mod view;
 
 fn main() {
     create_source().expect("Error creating source.");
