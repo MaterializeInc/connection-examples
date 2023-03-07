@@ -9,9 +9,7 @@ This repo is a collection of reference examples for common language-specific Pos
 ## Client libraries and Frameworks
 
 - [PHP](./php)
-  - [Laravel](./laravel)
 - [NodeJS](./nodejs)
-  - [AdonisJS](./adonisjs)
 - [TypeScript](./typescript)
 - [Deno](./deno)
 - [Java](./java)
