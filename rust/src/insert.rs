@@ -1,4 +1,4 @@
-use postgres::{Error};
+use postgres::Error;
 
 use crate::connection::create_client;
 
@@ -9,5 +9,8 @@ pub(crate) fn insert() -> Result<u64, Error> {
     let code = "GH";
     let name = "Ghana";
 
-    client.execute("INSERT INTO countries(code, name) VALUES($1, $2)", &[&code, &name])
+    client.execute(
+        "INSERT INTO countries(code, name) VALUES($1, $2)",
+        &[&code, &name],
+    )
 }

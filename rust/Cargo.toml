@@ -8,3 +8,6 @@ edition = "2021"
 [dependencies]
 
 postgres = "0.19.3"
+openssl = "0.10.38"
+postgres-openssl = "0.5.0"
+rust_decimal = { version = "1.28", features = ["db-postgres"] }
