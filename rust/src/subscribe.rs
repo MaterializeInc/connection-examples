@@ -1,5 +1,3 @@
-use std::{thread::sleep, time::Duration};
-
 use crate::connection::create_client;
 
 /// Run a subscribe over the PUBNUB materialized view
@@ -13,6 +11,5 @@ pub(crate) fn subscribe() {
         for row in results {
             println!("{:} - {:}", row.get::<usize, String>(2), row.get::<usize, String>(3));
         }
-        sleep(Duration::from_millis(200));
     }
 }
