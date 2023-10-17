@@ -1,11 +1,10 @@
-import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class App {
+public class Connection {
 
-    private final String url = "jdbc:postgresql://MATERIALIZE_HOST:6875/materialize";
+    private final String url = "jdbc:postgresql://MATERIALIZE_HOST:6875/materialize?sslmode=require";
     private final String user = "MATERIALIZE_USERNAME";
     private final String password = "MATERIALIZE_PASSWORD";
 
@@ -14,12 +13,11 @@ public class App {
      *
      * @return a Connection object
      */
-    public Connection connect() {
+    public java.sql.Connection connect() {
         Properties props = new Properties();
         props.setProperty("user", user);
         props.setProperty("password", password);
-        props.setProperty("ssl","true");
-        Connection conn = null;
+        java.sql.Connection conn = null;
         try {
             conn = DriverManager.getConnection(url, props);
             System.out.println("Connected to Materialize successfully!");
@@ -31,7 +29,7 @@ public class App {
     }
 
     public static void main(String[] args) {
-        App app = new App();
+        Connection app = new Connection();
         app.connect();
     }
 }
