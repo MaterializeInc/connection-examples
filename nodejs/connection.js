@@ -15,8 +15,21 @@ const client = new Client({
 */
 
 async function main() {
-    await client.connect();
-    /* Work with Materialize */
+    try {
+        await client.connect();
+        console.log('Connected to Materialize');
+
+        // Work with Materialize
+        // For example:
+        // const res = await client.query('SELECT * FROM your_table');
+        // console.log(res.rows);
+
+    } catch (err) {
+        console.error('Error:', err);
+    } finally {
+        await client.end();
+        console.log('Disconnected from Materialize');
+    }
 }
 
 main();
